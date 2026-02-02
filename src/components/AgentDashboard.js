@@ -8,8 +8,8 @@ import Navbar from './Navbar';
 import './AgentDashboard.css';
 
 const AgentDashboard = () => {
-  const { user } = useAuth();
-  const { addTransaction, students } = useData();
+  const { user, updateTicketBalance } = useAuth();
+  const { addTransaction, students, deductTicket } = useData();
   const [scanning, setScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [recentValidations, setRecentValidations] = useState([]);
@@ -112,6 +112,20 @@ const AgentDashboard = () => {
         agentName: user.name,
         mealType: currentMealType
       });
+
+      deductTicket(student.id, currentMealType);
+
+      const storedUser = localStorage.getItem('campuseat_user');
+      if (storedUser) {
+        const currentUser = JSON.parse(storedUser);
+        if (currentUser.studentId === data.studentId) {
+          const updatedTickets = {
+            ...currentUser.tickets,
+            [currentMealType]: Math.max(0, (currentUser.tickets?.[currentMealType] || 0) - 1)
+          };
+          updateTicketBalance(updatedTickets);
+        }
+      }
 
       const validation = {
         id: transaction.id,

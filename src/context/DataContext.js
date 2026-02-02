@@ -41,7 +41,11 @@ export const DataProvider = ({ children }) => {
       id: `ETU2024${String(i + 1).padStart(3, '0')}`,
       name: `Étudiant ${i + 1}`,
       email: `etudiant${i + 1}@campus.edu`,
-      ticketBalance: 0,
+      tickets: {
+        breakfast: 0,
+        lunch: 0,
+        dinner: 0
+      },
       quota: 20,
       active: true
     }));
@@ -83,7 +87,25 @@ export const DataProvider = ({ children }) => {
 
   const updateStudentBalance = (studentId, newBalance) => {
     setStudents(prev => 
-      prev.map(s => s.id === studentId ? { ...s, ticketBalance: newBalance } : s)
+      prev.map(s => s.id === studentId ? { ...s, tickets: newBalance } : s)
+    );
+  };
+
+  const deductTicket = (studentId, mealType) => {
+    setStudents(prev => 
+      prev.map(s => {
+        if (s.id === studentId) {
+          const currentTickets = s.tickets || { breakfast: 0, lunch: 0, dinner: 0 };
+          return {
+            ...s,
+            tickets: {
+              ...currentTickets,
+              [mealType]: Math.max(0, (currentTickets[mealType] || 0) - 1)
+            }
+          };
+        }
+        return s;
+      })
     );
   };
 
@@ -131,9 +153,10 @@ export const DataProvider = ({ children }) => {
       students,
       purchases,
       addTransaction,
-      addPurchase,
       updateStudentQuota,
       updateStudentBalance,
+      deductTicket,
+      addPurchase,
       getStatistics
     }}>
       {children}
