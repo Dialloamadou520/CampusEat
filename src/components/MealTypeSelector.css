@@ -1,0 +1,88 @@
+.meal-types-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.meal-type-card {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.meal-type-card:hover {
+  border-color: #10b981;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.meal-type-card.selected {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  border-color: #10b981;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.meal-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.meal-type-card.selected .meal-icon {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.meal-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.meal-type-card.selected .meal-name {
+  color: #065f46;
+}
+
+.meal-time {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.meal-type-card.selected .meal-time {
+  color: #047857;
+  font-weight: 500;
+}
+
+.balance-details {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.balance-details span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #065f46;
+}
+
+@media (max-width: 640px) {
+  .meal-types-grid {
+    grid-template-columns: 1fr;
+  }
+}

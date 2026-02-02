@@ -10,7 +10,11 @@ const DEMO_USERS = [
     role: 'student',
     name: 'Jean Dupont',
     studentId: 'ETU2024001',
-    ticketBalance: 0,
+    tickets: {
+      breakfast: 0,
+      lunch: 0,
+      dinner: 0
+    },
     quota: 20
   },
   {
@@ -81,7 +85,11 @@ export const AuthProvider = ({ children }) => {
       role: 'student',
       name: userData.name,
       studentId: userData.studentId,
-      ticketBalance: 0,
+      tickets: {
+        breakfast: 0,
+        lunch: 0,
+        dinner: 0
+      },
       quota: 20
     };
 
@@ -99,7 +107,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateTicketBalance = (newBalance) => {
     if (user && user.role === 'student') {
-      const updatedUser = { ...user, ticketBalance: newBalance };
+      const updatedUser = { ...user, tickets: newBalance };
       setUser(updatedUser);
       localStorage.setItem('campuseat_user', JSON.stringify(updatedUser));
     }

@@ -26,7 +26,11 @@ const PaymentCallback = ({ status }) => {
       const purchase = JSON.parse(pendingPurchase);
 
       if (status === 'success') {
-        const newBalance = user.ticketBalance + purchase.tickets;
+        const mealType = purchase.mealType || 'lunch';
+        const newBalance = {
+          ...user.tickets,
+          [mealType]: (user.tickets?.[mealType] || 0) + purchase.tickets
+        };
         updateTicketBalance(newBalance);
         
         addPurchase({
@@ -35,6 +39,7 @@ const PaymentCallback = ({ status }) => {
           tickets: purchase.tickets,
           amount: purchase.amount,
           paymentMethod: purchase.paymentMethod,
+          mealType: mealType,
           transactionId: purchase.transactionId
         });
 

@@ -58,13 +58,35 @@ const StudentDashboard = () => {
 
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon tickets">
-              <Ticket size={24} />
+            <div className="stat-icon breakfast">
+              <span style={{ fontSize: '1.5rem' }}>🌅</span>
             </div>
             <div className="stat-info">
-              <span className="stat-label">Tickets disponibles</span>
-              <span className="stat-value">{user?.ticketBalance}</span>
-              <span className="stat-subtitle">sur {user?.quota} ce mois</span>
+              <span className="stat-label">Petit-déjeuner</span>
+              <span className="stat-value">{user?.tickets?.breakfast || 0}</span>
+              <span className="stat-subtitle">6h - 9h</span>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon lunch">
+              <span style={{ fontSize: '1.5rem' }}>☀️</span>
+            </div>
+            <div className="stat-info">
+              <span className="stat-label">Déjeuner</span>
+              <span className="stat-value">{user?.tickets?.lunch || 0}</span>
+              <span className="stat-subtitle">12h - 15h</span>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon dinner">
+              <span style={{ fontSize: '1.5rem' }}>🌙</span>
+            </div>
+            <div className="stat-info">
+              <span className="stat-label">Dîner</span>
+              <span className="stat-value">{user?.tickets?.dinner || 0}</span>
+              <span className="stat-subtitle">18h - 21h</span>
             </div>
           </div>
 

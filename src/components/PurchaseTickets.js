@@ -3,12 +3,20 @@ import { useAuth } from '../context/AuthContext';
 import { X, ShoppingCart, ExternalLink } from 'lucide-react';
 import { generateWavePaymentLink } from '../utils/waveApi';
 import './PurchaseTickets.css';
+import './MealTypeSelector.css';
 
 const PurchaseTickets = ({ onClose }) => {
   const { user } = useAuth();
+  const [selectedMealType, setSelectedMealType] = useState('lunch');
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [processing, setProcessing] = useState(false);
+
+  const mealTypes = [
+    { id: 'breakfast', name: 'Petit-déjeuner', icon: '🌅', time: '6h - 9h' },
+    { id: 'lunch', name: 'Déjeuner', icon: '☀️', time: '12h - 15h' },
+    { id: 'dinner', name: 'Dîner', icon: '🌙', time: '18h - 21h' }
+  ];
 
   const packages = [
     { id: 1, tickets: 5, price: 10000, popular: false },
@@ -28,14 +36,16 @@ const PurchaseTickets = ({ onClose }) => {
     const pkg = packages.find(p => p.id === selectedPackage);
 
     try {
+      const mealType = mealTypes.find(m => m.id === selectedMealType);
       const paymentData = {
         amount: pkg.price,
         currency: 'XOF',
-        description: `Achat de ${pkg.tickets} tickets CampusEat`,
+        description: `Achat de ${pkg.tickets} tickets ${mealType.name} CampusEat`,
         customerEmail: user.email || `${user.studentId}@campus.edu`,
         customerName: user.name,
         studentId: user.studentId,
-        tickets: pkg.tickets
+        tickets: pkg.tickets,
+        mealType: selectedMealType
       };
 
       const result = await generateWavePaymentLink(paymentData);
@@ -47,6 +57,7 @@ const PurchaseTickets = ({ onClose }) => {
           tickets: pkg.tickets,
           amount: pkg.price,
           paymentMethod: 'wave',
+          mealType: selectedMealType,
           transactionId: result.transactionId,
           timestamp: Date.now()
         }));
@@ -164,7 +175,24 @@ const PurchaseTickets = ({ onClose }) => {
         <div className="modal-body">
           <div className="current-balance">
             <span>Solde actuel:</span>
-            <strong>{user?.ticketBalance} tickets</strong>
+            <div className="balance-details">
+              <span>🌅 {user?.tickets?.breakfast || 0} | ☀️ {user?.tickets?.lunch || 0} | 🌙 {user?.tickets?.dinner || 0}</span>
+            </div>
+          </div>
+
+          <h3>Type de repas</h3>
+          <div className="meal-types-grid">
+            {mealTypes.map((meal) => (
+              <div
+                key={meal.id}
+                className={`meal-type-card ${selectedMealType === meal.id ? 'selected' : ''}`}
+                onClick={() => setSelectedMealType(meal.id)}
+              >
+                <div className="meal-icon">{meal.icon}</div>
+                <div className="meal-name">{meal.name}</div>
+                <div className="meal-time">{meal.time}</div>
+              </div>
+            ))}
           </div>
 
           <h3>Choisissez un forfait</h3>
@@ -208,9 +236,13 @@ const PurchaseTickets = ({ onClose }) => {
                 <span>Montant:</span>
                 <strong>{packages.find(p => p.id === selectedPackage).price.toLocaleString('fr-FR')} FCFA</strong>
               </div>
+              <div className="summary-row">
+                <span>Type de repas:</span>
+                <strong>{mealTypes.find(m => m.id === selectedMealType)?.name}</strong>
+              </div>
               <div className="summary-row total">
-                <span>Nouveau solde:</span>
-                <strong>{user?.ticketBalance + packages.find(p => p.id === selectedPackage).tickets} tickets</strong>
+                <span>Nouveau solde {mealTypes.find(m => m.id === selectedMealType)?.icon}:</span>
+                <strong>{(user?.tickets?.[selectedMealType] || 0) + packages.find(p => p.id === selectedPackage).tickets} tickets</strong>
               </div>
             </div>
           )}

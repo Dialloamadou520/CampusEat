@@ -131,8 +131,16 @@
   transform: scale(1.1) rotate(5deg);
 }
 
-.stat-icon.tickets {
+.stat-icon.breakfast {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-icon.lunch {
   background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon.dinner {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
 }
 
 .stat-icon.week {
