@@ -84,21 +84,6 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="demo-accounts">
-          <h3>Comptes de démonstration</h3>
-          <div className="demo-list">
-            {demoAccounts.map((account) => (
-              <div key={account.role} className="demo-item">
-                <strong>{account.role}</strong>
-                <div className="demo-credentials">
-                  <span>{account.email}</span>
-                  <span>{account.password}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="register-link">
           <p>Vous n'avez pas de compte ?</p>
           <Link to="/register">Créer un compte étudiant</Link>
