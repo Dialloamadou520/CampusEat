@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { format } from 'date-fns';
 
 const DataContext = createContext(null);
 

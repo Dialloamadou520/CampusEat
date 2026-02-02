@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
-import { X, ShoppingCart, CreditCard, CheckCircle, ExternalLink } from 'lucide-react';
+import { X, ShoppingCart, ExternalLink } from 'lucide-react';
 import { generateWavePaymentLink } from '../utils/waveApi';
 import './PurchaseTickets.css';
 
 const PurchaseTickets = ({ onClose }) => {
-  const { user, updateTicketBalance } = useAuth();
-  const { addPurchase } = useData();
+  const { user } = useAuth();
   const [selectedPackage, setSelectedPackage] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState('wave');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const packages = [
     { id: 1, tickets: 5, price: 10000, popular: false },
@@ -50,7 +46,7 @@ const PurchaseTickets = ({ onClose }) => {
           studentName: user.name,
           tickets: pkg.tickets,
           amount: pkg.price,
-          paymentMethod: paymentMethod,
+          paymentMethod: 'wave',
           transactionId: result.transactionId,
           timestamp: Date.now()
         }));
@@ -66,20 +62,6 @@ const PurchaseTickets = ({ onClose }) => {
       setProcessing(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className="purchase-modal-overlay" onClick={onClose}>
-        <div className="purchase-modal success-modal" onClick={(e) => e.stopPropagation()}>
-          <div className="success-content">
-            <CheckCircle size={64} className="success-icon" />
-            <h2>Paiement réussi !</h2>
-            <p>Vos tickets ont été ajoutés à votre compte</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (showConfirmation) {
     const selectedPkg = packages.find(p => p.id === selectedPackage);

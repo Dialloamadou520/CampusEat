@@ -123,7 +123,9 @@ export const checkWavePaymentStatus = async (transactionId) => {
   }
 };
 
-export default {
+const waveApi = {
   generateWavePaymentLink,
   checkWavePaymentStatus
 };
+
+export default waveApi;

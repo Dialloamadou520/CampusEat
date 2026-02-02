@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React from 'react';
 import { useData } from '../context/DataContext';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Users, TrendingUp, Calendar, Download, FileText, Table } from 'lucide-react';
@@ -9,9 +8,7 @@ import Navbar from './Navbar';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
   const { transactions, students, getStatistics } = useData();
-  const [selectedPeriod, setSelectedPeriod] = useState('week');
 
   const stats = getStatistics();
 
