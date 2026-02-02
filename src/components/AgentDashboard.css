@@ -1,0 +1,216 @@
+.scanner-section {
+  margin-bottom: 2rem;
+}
+
+.scanner-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scanner-card h2 {
+  font-size: 1.5rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.scanner-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.scan-icon {
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+
+.scanner-placeholder p {
+  color: #6b7280;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.scan-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.scan-button:hover {
+  background: #059669;
+}
+
+.scanner-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+#qr-reader {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.stop-button {
+  padding: 0.75rem 1.5rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stop-button:hover {
+  background: #dc2626;
+}
+
+.scan-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.scan-result.success {
+  background: #d1fae5;
+  border-radius: 1rem;
+}
+
+.scan-result.error {
+  background: #fee2e2;
+  border-radius: 1rem;
+}
+
+.result-icon {
+  margin-bottom: 1rem;
+}
+
+.scan-result.success .result-icon {
+  color: #10b981;
+}
+
+.scan-result.error .result-icon {
+  color: #ef4444;
+}
+
+.scan-result h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.student-details {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+.student-details p {
+  margin: 0.5rem 0;
+  color: #374151;
+}
+
+.stat-icon.success {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon.total {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.validations-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.validations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.validation-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.validation-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.validation-icon.success {
+  background: #10b981;
+}
+
+.validation-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.validation-name {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.validation-id {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.validation-time {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .scanner-card {
+    padding: 1.5rem;
+  }
+
+  .scanner-placeholder {
+    padding: 2rem 1rem;
+  }
+
+  .scan-result {
+    padding: 2rem 1rem;
+  }
+}
