@@ -43,9 +43,45 @@ const AgentDashboard = () => {
     }, 100);
   };
 
+  const getMealTypeFromTime = () => {
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 9) return 'breakfast';
+    if (hour >= 12 && hour < 15) return 'lunch';
+    if (hour >= 18 && hour < 21) return 'dinner';
+    return null;
+  };
+
+  const getMealTypeName = (type) => {
+    const names = {
+      breakfast: 'Petit-déjeuner',
+      lunch: 'Déjeuner',
+      dinner: 'Dîner'
+    };
+    return names[type] || type;
+  };
+
   const onScanSuccess = (decodedText) => {
     try {
       const data = JSON.parse(decodedText);
+      const currentMealType = getMealTypeFromTime();
+      
+      if (!currentMealType) {
+        setScanResult({
+          success: false,
+          message: 'Hors des heures de service',
+          details: 'Les repas sont servis : 6h-9h, 12h-15h, 18h-21h'
+        });
+        return;
+      }
+
+      if (data.mealType !== currentMealType) {
+        setScanResult({
+          success: false,
+          message: `Type de repas incorrect`,
+          details: `QR Code pour ${getMealTypeName(data.mealType)}, mais c'est l'heure du ${getMealTypeName(currentMealType)}`
+        });
+        return;
+      }
       
       const student = students.find(s => s.studentId === data.studentId);
       
@@ -58,11 +94,13 @@ const AgentDashboard = () => {
         return;
       }
 
-      if (student.ticketBalance <= 0) {
+      const ticketBalance = student.tickets?.[currentMealType] || 0;
+      if (ticketBalance <= 0) {
         setScanResult({
           success: false,
-          message: 'Solde de tickets insuffisant',
-          student: student
+          message: `Solde de tickets ${getMealTypeName(currentMealType)} insuffisant`,
+          student: student,
+          mealType: currentMealType
         });
         return;
       }
@@ -71,13 +109,15 @@ const AgentDashboard = () => {
         studentId: student.id,
         studentName: student.name,
         restaurant: 'Restaurant Central',
-        agentName: user.name
+        agentName: user.name,
+        mealType: currentMealType
       });
 
       const validation = {
         id: transaction.id,
         studentName: student.name,
         studentId: student.id,
+        mealType: currentMealType,
         time: new Date(),
         success: true
       };
@@ -86,8 +126,9 @@ const AgentDashboard = () => {
 
       setScanResult({
         success: true,
-        message: 'Ticket validé avec succès',
-        student: student
+        message: `Ticket ${getMealTypeName(currentMealType)} validé avec succès`,
+        student: student,
+        mealType: currentMealType
       });
 
       if (scanner) {
@@ -187,12 +228,15 @@ const AgentDashboard = () => {
                   )}
                 </div>
                 <h3>{scanResult.message}</h3>
+                {scanResult.details && (
+                  <p className="result-details">{scanResult.details}</p>
+                )}
                 {scanResult.student && (
                   <div className="student-details">
                     <p><strong>Nom:</strong> {scanResult.student.name}</p>
                     <p><strong>ID:</strong> {scanResult.student.id}</p>
-                    {scanResult.success && (
-                      <p><strong>Tickets restants:</strong> {scanResult.student.ticketBalance - 1}</p>
+                    {scanResult.success && scanResult.mealType && (
+                      <p><strong>Tickets {getMealTypeName(scanResult.mealType)} restants:</strong> {(scanResult.student.tickets?.[scanResult.mealType] || 0) - 1}</p>
                     )}
                   </div>
                 )}

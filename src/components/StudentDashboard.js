@@ -13,17 +13,25 @@ const StudentDashboard = () => {
   const { transactions } = useData();
   const [qrData, setQrData] = useState('');
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [selectedMealType, setSelectedMealType] = useState('lunch');
+
+  const mealTypes = [
+    { id: 'breakfast', name: 'Petit-déjeuner', icon: '🌅', time: '6h - 9h' },
+    { id: 'lunch', name: 'Déjeuner', icon: '☀️', time: '12h - 15h' },
+    { id: 'dinner', name: 'Dîner', icon: '🌙', time: '18h - 21h' }
+  ];
 
   useEffect(() => {
     if (user) {
       const data = JSON.stringify({
         studentId: user.studentId,
         name: user.name,
+        mealType: selectedMealType,
         timestamp: Date.now()
       });
       setQrData(data);
     }
-  }, [user]);
+  }, [user, selectedMealType]);
 
   const studentTransactions = transactions
     .filter(t => t.studentId === user?.studentId)
@@ -117,8 +125,22 @@ const StudentDashboard = () => {
           <div className="qr-section">
             <h2>Votre QR Code</h2>
             <p className="qr-description">
-              Présentez ce code à l'agent pour valider votre repas
+              Sélectionnez le type de repas et présentez ce code à l'agent
             </p>
+            
+            <div className="meal-selector">
+              {mealTypes.map((meal) => (
+                <button
+                  key={meal.id}
+                  className={`meal-btn ${selectedMealType === meal.id ? 'active' : ''}`}
+                  onClick={() => setSelectedMealType(meal.id)}
+                >
+                  <span className="meal-icon">{meal.icon}</span>
+                  <span className="meal-name">{meal.name}</span>
+                </button>
+              ))}
+            </div>
+
             <div className="qr-container">
               {qrData && (
                 <QRCodeSVG
