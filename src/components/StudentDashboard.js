@@ -141,20 +141,37 @@ const StudentDashboard = () => {
               ))}
             </div>
 
-            <div className="qr-container">
-              {qrData && (
-                <QRCodeSVG
-                  value={qrData}
-                  size={280}
-                  level="H"
-                  includeMargin={true}
-                />
-              )}
-            </div>
-            <div className="student-info">
-              <p><strong>ID:</strong> {user?.studentId}</p>
-              <p><strong>Nom:</strong> {user?.name}</p>
-            </div>
+            {(user?.tickets?.[selectedMealType] || 0) > 0 ? (
+              <>
+                <div className="qr-container">
+                  {qrData && (
+                    <QRCodeSVG
+                      value={qrData}
+                      size={280}
+                      level="H"
+                      includeMargin={true}
+                    />
+                  )}
+                </div>
+                <div className="student-info">
+                  <p><strong>ID:</strong> {user?.studentId}</p>
+                  <p><strong>Nom:</strong> {user?.name}</p>
+                </div>
+              </>
+            ) : (
+              <div className="no-tickets-message">
+                <div className="no-tickets-icon">⚠️</div>
+                <h3>Aucun ticket disponible</h3>
+                <p>Vous n'avez pas de tickets pour {mealTypes.find(m => m.id === selectedMealType)?.name}.</p>
+                <p>Veuillez acheter des tickets pour accéder au QR code.</p>
+                <button 
+                  className="purchase-tickets-btn-inline" 
+                  onClick={() => setShowPurchaseModal(true)}
+                >
+                  Acheter des tickets
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="history-section">

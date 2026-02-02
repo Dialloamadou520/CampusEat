@@ -256,10 +256,67 @@
 .student-info {
   text-align: center;
   color: #374151;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
 }
 
 .student-info p {
   margin: 0.5rem 0;
+  color: #374151;
+}
+
+.no-tickets-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px dashed #f59e0b;
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.no-tickets-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.no-tickets-message h3 {
+  color: #92400e;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.no-tickets-message p {
+  color: #78350f;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.purchase-tickets-btn-inline {
+  margin-top: 1.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.purchase-tickets-btn-inline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #059669, #047857);
 }
 
 .section-header {
